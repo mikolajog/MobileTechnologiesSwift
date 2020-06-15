@@ -25,6 +25,28 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var weatherImage: UIImageView!
     
+    @IBAction func onClickPrev(_ sender: Any) {
+        self.page = self.page - 1
+        
+        if self.page == 0 {
+            self.Prev.isEnabled = false
+        }
+        
+        self.Next.isEnabled = true
+        self.showDataOnPage(self.page)
+    }
+    
+    @IBAction func onClickNext(_ sender: Any) {
+        self.page = self.page + 1
+        
+        if self.page == self.dataWeather.count {
+            self.Next.isEnabled = false
+        }
+        
+        self.Prev.isEnabled = true
+        self.showDataOnPage(self.page)
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,37 +55,38 @@ class ViewController: UIViewController {
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
             guard let data = data else { return }
             
-            let jsonRs = try? JSONSerialization.jsonObject(with: data, options: [])
-            let unwrappedJsonRs = jsonRs!
-            let arrayJsonRs = unwrappedJsonRs as! [Any]
-            let castedJsonRs = arrayJsonRs[0] as! [String:Any]
-            let woeid = String((castedJsonRs["woeid"] as! Int))
-            let cityDataUrl = URL(string: "https://www.metaweather.com/api/location/" + woeid)!
+            let json_ = try? JSONSerialization.jsonObject(with: data, options: [])
+            let unwrap_json = json_!
+            let array_json = unwrap_json as! [Any]
+            let casted_json = array_json[0] as! [String:Any]
             
-            let locTask = URLSession.shared.dataTask(with: cityDataUrl) {(data, response, error) in
+        
+            let woeid = String((casted_json["woeid"] as! Int))
+            let url_for_city = URL(string: "https://www.metaweather.com/api/location/" + woeid)!
+            
+            let locTask = URLSession.shared.dataTask(with: url_for_city) {(data, response, error) in
                 guard let data = data else { return }
                 
                 let jsonRs = try? JSONSerialization.jsonObject(with: data, options: [])
                 
-                let unwrappedJsonRs = jsonRs!
-                let castedJsonRs = unwrappedJsonRs as! [String:Any]
+                let un_json = jsonRs!
+                let cast_json = un_json as! [String:Any]
                 
-                let consolidatedWeatherOpt = castedJsonRs["consolidated_weather"]!
-                let consolidatedWeather = consolidatedWeatherOpt as! [Any]
+                let weather = cast_json["consolidated_weather"]!
+                let weather_ = weather as! [Any]
                 
                 DispatchQueue.main.async {
+                    self.dataWeather = weather_ as! [[String:Any]]
+                    self.showDataOnPage(0)
                     self.Prev.isEnabled = false
-                    self.dataWeather = consolidatedWeather as! [[String:Any]]
-                    self.display(0)
                 }
             }
             locTask.resume()
         }
         task.resume()
-        
     }
     
-    func display(_ index: Int) {
+    func showDataOnPage(_ index: Int) {
         if(index < self.dataWeather.count && index >= 0) {
             
             let day = self.dataWeather[index]
@@ -84,33 +107,7 @@ class ViewController: UIViewController {
                 self.weatherImage.image = UIImage(data: data)
                 }})
             session.resume()
-            
         }
     }
-    
-    
-    @IBAction func onClickPrev(_ sender: Any) {
-        self.page = self.page - 1
-        
-        if self.page == 0 {
-            self.Prev.isEnabled = false
-        }
-        
-        self.Next.isEnabled = true
-        self.display(self.page)
-    }
-    
-    @IBAction func onClickNext(_ sender: Any) {
-        self.page = self.page + 1
-        
-        if self.page == self.dataWeather.count {
-            self.Next.isEnabled = false
-        }
-        
-        self.Prev.isEnabled = true
-        self.display(self.page)
-        
-    }
-    
 }
 
