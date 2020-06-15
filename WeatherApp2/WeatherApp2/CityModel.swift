@@ -9,7 +9,7 @@
 
 import Foundation
 
-class City {
+class CityModel {
     
     let name: String
     let id: String

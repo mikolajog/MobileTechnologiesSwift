@@ -17,10 +17,10 @@
 		3F740DC32497EF5700042C27 /* ResultTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F740DC22497EF5700042C27 /* ResultTableViewController.swift */; };
 		3F740DC52497F1EF00042C27 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F740DC42497F1EF00042C27 /* ViewController.swift */; };
 		3F740DC72497F25F00042C27 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F740DC62497F25F00042C27 /* SplitViewController.swift */; };
-		3F740DC92497F2CF00042C27 /* ApiHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F740DC82497F2CF00042C27 /* ApiHandler.swift */; };
-		3F740DCB2497F2E400042C27 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F740DCA2497F2E400042C27 /* City.swift */; };
-		3F740DCD2497F30000042C27 /* CityForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F740DCC2497F30000042C27 /* CityForecast.swift */; };
-		3F740DCF2497F31600042C27 /* DailyForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F740DCE2497F31600042C27 /* DailyForecast.swift */; };
+		3F740DC92497F2CF00042C27 /* WeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F740DC82497F2CF00042C27 /* WeatherAPI.swift */; };
+		3F740DCB2497F2E400042C27 /* CityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F740DCA2497F2E400042C27 /* CityModel.swift */; };
+		3F740DCD2497F30000042C27 /* CityWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F740DCC2497F30000042C27 /* CityWeather.swift */; };
+		3F740DCF2497F31600042C27 /* DayWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F740DCE2497F31600042C27 /* DayWeather.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,10 +36,10 @@
 		3F740DC22497EF5700042C27 /* ResultTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableViewController.swift; sourceTree = "<group>"; };
 		3F740DC42497F1EF00042C27 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3F740DC62497F25F00042C27 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
-		3F740DC82497F2CF00042C27 /* ApiHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiHandler.swift; sourceTree = "<group>"; };
-		3F740DCA2497F2E400042C27 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
-		3F740DCC2497F30000042C27 /* CityForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityForecast.swift; sourceTree = "<group>"; };
-		3F740DCE2497F31600042C27 /* DailyForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyForecast.swift; sourceTree = "<group>"; };
+		3F740DC82497F2CF00042C27 /* WeatherAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPI.swift; sourceTree = "<group>"; };
+		3F740DCA2497F2E400042C27 /* CityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityModel.swift; sourceTree = "<group>"; };
+		3F740DCC2497F30000042C27 /* CityWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeather.swift; sourceTree = "<group>"; };
+		3F740DCE2497F31600042C27 /* DayWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayWeather.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,10 +83,10 @@
 				3F740DC22497EF5700042C27 /* ResultTableViewController.swift */,
 				3F740DC42497F1EF00042C27 /* ViewController.swift */,
 				3F740DC62497F25F00042C27 /* SplitViewController.swift */,
-				3F740DC82497F2CF00042C27 /* ApiHandler.swift */,
-				3F740DCA2497F2E400042C27 /* City.swift */,
-				3F740DCC2497F30000042C27 /* CityForecast.swift */,
-				3F740DCE2497F31600042C27 /* DailyForecast.swift */,
+				3F740DC82497F2CF00042C27 /* WeatherAPI.swift */,
+				3F740DCA2497F2E400042C27 /* CityModel.swift */,
+				3F740DCC2497F30000042C27 /* CityWeather.swift */,
+				3F740DCE2497F31600042C27 /* DayWeather.swift */,
 			);
 			path = WeatherApp2;
 			sourceTree = "<group>";
@@ -164,13 +164,13 @@
 			files = (
 				3F740DC52497F1EF00042C27 /* ViewController.swift in Sources */,
 				3F740DC72497F25F00042C27 /* SplitViewController.swift in Sources */,
-				3F740DCB2497F2E400042C27 /* City.swift in Sources */,
+				3F740DCB2497F2E400042C27 /* CityModel.swift in Sources */,
 				3F740DAC2497D96700042C27 /* AppDelegate.swift in Sources */,
-				3F740DCF2497F31600042C27 /* DailyForecast.swift in Sources */,
-				3F740DC92497F2CF00042C27 /* ApiHandler.swift in Sources */,
+				3F740DCF2497F31600042C27 /* DayWeather.swift in Sources */,
+				3F740DC92497F2CF00042C27 /* WeatherAPI.swift in Sources */,
 				3F740DAF2497D96700042C27 /* WeatherApp2.xcdatamodeld in Sources */,
 				3F740DC32497EF5700042C27 /* ResultTableViewController.swift in Sources */,
-				3F740DCD2497F30000042C27 /* CityForecast.swift in Sources */,
+				3F740DCD2497F30000042C27 /* CityWeather.swift in Sources */,
 				3F740DB12497D96700042C27 /* MasterViewController.swift in Sources */,
 				3F740DB32497D96700042C27 /* DetailViewController.swift in Sources */,
 			);

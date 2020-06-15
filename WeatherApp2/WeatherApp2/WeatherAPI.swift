@@ -8,13 +8,13 @@
 import Foundation
 import UIKit.UIImage
 
-class ApiHandler {
+class WeatherAPI {
     let METAWEATHER_API_BASE = "https://www.metaweather.com/"
     let METAWEATHER_API_SEARCH = "api/location/search/?query="
     let METAWEATHER_API_WEATHER = "api/location/"
     let METAWEATHER_API_IMAGE = "static/img/weather/png/"
     
-    func getLocationForecast(locationId: String, callback: @escaping (_: CityForecast) -> Void) {
+    func getLocationForecast(locationId: String, callback: @escaping (_: CityWeather) -> Void) {
         let url = URL(string: METAWEATHER_API_BASE + METAWEATHER_API_WEATHER + "\(locationId)/")
         if url == nil { return }
         let urlSession = URLSession.shared
@@ -33,7 +33,7 @@ class ApiHandler {
             
             do {
                 let jsonObject = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any]
-                let forecast = CityForecast(data: jsonObject!)
+                let forecast = CityWeather(data: jsonObject!)
                 callback(_: forecast)
             } catch _ {
                 return
@@ -43,7 +43,7 @@ class ApiHandler {
         dataTask.resume()
     }
     
-    func findCity(cityName: String, callback: @escaping (_: [City]) -> Void) {
+    func findCity(cityName: String, callback: @escaping (_: [CityModel]) -> Void) {
         let url = URL(string: METAWEATHER_API_BASE + METAWEATHER_API_SEARCH + "\(cityName)")
         if url == nil { return }
         let urlSession = URLSession.shared
@@ -62,10 +62,10 @@ class ApiHandler {
             
             do {
                 let jsonObject = try JSONSerialization.jsonObject(with: data!, options: []) as? [[String: Any]]
-                var cities: [City] = []
+                var cities: [CityModel] = []
                 
                 for subObject in jsonObject! {
-                    cities.append(City(jsonData: subObject))
+                    cities.append(CityModel(jsonData: subObject))
                 }
                 
                 callback(_: cities)

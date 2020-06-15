@@ -8,9 +8,9 @@
 
 import Foundation
 
-class CityForecast {
+class CityWeather {
     
-    var forecastList = [DailyForecast]()
+    var forecastList = [DayWeather]()
     var dayNum = Int()
     var cityName = String()
     var cityId = String()
@@ -22,7 +22,7 @@ class CityForecast {
         let daysRawData = data["consolidated_weather"]! as? [[String: Any]]
         
         for dayData in daysRawData! {
-            forecastList.append(DailyForecast(data: dayData))
+            forecastList.append(DayWeather(data: dayData))
         }
         
         dayNum = 0
@@ -30,7 +30,7 @@ class CityForecast {
         cityId = "\(data["woeid"]!)"
     }
     
-    func getDailyForecast() -> DailyForecast {
+    func getDailyForecast() -> DayWeather {
         return forecastList[dayNum]
     }
     

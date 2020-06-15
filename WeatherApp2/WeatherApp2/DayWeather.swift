@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DailyForecast {
+class DayWeather {
     
     var abbrev = String()
     var date = String()

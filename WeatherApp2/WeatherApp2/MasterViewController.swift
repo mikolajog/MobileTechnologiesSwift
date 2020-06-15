@@ -9,19 +9,19 @@
 import UIKit
 
 protocol CitySelectionDelegate: class {
-    func selectedCityForecast(_ forecast: CityForecast)
+    func selectedCityForecast(_ forecast: CityWeather)
 }
 
 class MasterViewController: UITableViewController {
     
     var cities = [
-        City(name: "New York", id: "2459115"),
-        City(name: "Chicago", id: "2379574"),
-        City(name: "Miami", id: "2450022")
+        CityModel(name: "New York", id: "2459115"),
+        CityModel(name: "Chicago", id: "2379574"),
+        CityModel(name: "Miami", id: "2450022")
     ]
     
     var cityIds = [Int: String]()
-    var forecasts = [String: CityForecast]()
+    var forecasts = [String: CityWeather]()
     
     weak var delegate: CitySelectionDelegate?
     
@@ -39,17 +39,17 @@ class MasterViewController: UITableViewController {
     
     
     func readWeather(cityId: String, cityName: String) {
-        ApiHandler().getLocationForecast(locationId: cityId, callback: saveDataAndUpdateView)
+        WeatherAPI().getLocationForecast(locationId: cityId, callback: saveDataAndUpdateView)
     }
     
-    func saveDataAndUpdateView(forecast: CityForecast) {
+    func saveDataAndUpdateView(forecast: CityWeather) {
         DispatchQueue.main.async {
             self.forecasts[forecast.cityId] = forecast
             self.updateView(locationForecast: forecast)
         }
     }
     
-    func updateView(locationForecast: CityForecast) {
+    func updateView(locationForecast: CityWeather) {
         let tableCell = self.tableView?.visibleCells
         
         if let cells = tableCell {

@@ -25,7 +25,7 @@ class ViewController: UIViewController {
     
     
     
-    var currentCityForecast: CityForecast! {
+    var currentCityForecast: CityWeather! {
         didSet {
             update()
         }
@@ -76,7 +76,7 @@ class ViewController: UIViewController {
 
 
 extension ViewController: CitySelectionDelegate {
-    func selectedCityForecast(_ forecast: CityForecast) {
+    func selectedCityForecast(_ forecast: CityWeather) {
         currentCityForecast = forecast
     }
 }

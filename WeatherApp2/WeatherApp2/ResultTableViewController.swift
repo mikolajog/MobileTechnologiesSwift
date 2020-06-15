@@ -14,8 +14,8 @@ class ResultTableViewController: UITableViewController {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var cityTextField: UITextField!
     
-    var cities = [City]()
-    var selectedCity: City?
+    var cities = [CityModel]()
+    var selectedCity: CityModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,10 +28,10 @@ class ResultTableViewController: UITableViewController {
     @IBAction func findCities(_ sender: UIButton) {
         self.cities.removeAll()
         let city = cityTextField.text!
-        ApiHandler().findCity(cityName: city, callback: saveDataAndUpdateView)
+        WeatherAPI().findCity(cityName: city, callback: saveDataAndUpdateView)
     }
     
-    func saveDataAndUpdateView(cities: [City]) {
+    func saveDataAndUpdateView(cities: [CityModel]) {
         DispatchQueue.main.async {
             for i in 0..<cities.count {
                 print("city callback - \(cities[i].name)")
@@ -58,7 +58,7 @@ class ResultTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let indexPath = tableView.indexPathForSelectedRow
         let cell = tableView.cellForRow(at: indexPath!)!
-        self.selectedCity = City(name: (cell.textLabel?.text!)!, id: String(cell.tag))
+        self.selectedCity = CityModel(name: (cell.textLabel?.text!)!, id: String(cell.tag))
         performSegue(withIdentifier: "unwindSegueToMasterView", sender: self)
     }
     
