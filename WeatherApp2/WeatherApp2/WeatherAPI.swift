@@ -9,14 +9,15 @@ import Foundation
 import UIKit.UIImage
 
 class WeatherAPI {
-    let METAWEATHER_API_BASE = "https://www.metaweather.com/"
-    let METAWEATHER_API_SEARCH = "api/location/search/?query="
-    let METAWEATHER_API_WEATHER = "api/location/"
-    let METAWEATHER_API_IMAGE = "static/img/weather/png/"
+    let MAIN = "https://www.metaweather.com/"
+    let SEARCH = "api/location/search/?query="
+    let LOCATION = "api/location/"
+    let IMG = "static/img/weather/png/"
     
-    func getLocationForecast(locationId: String, callback: @escaping (_: CityWeather) -> Void) {
-        let url = URL(string: METAWEATHER_API_BASE + METAWEATHER_API_WEATHER + "\(locationId)/")
+    func getWeatherForLocation(locationId: String, callback: @escaping (_: CityWeather) -> Void) {
+        let url = URL(string: MAIN + LOCATION + "\(locationId)/")
         if url == nil { return }
+        
         let urlSession = URLSession.shared
         
         let dataTask = urlSession.dataTask(with: url!, completionHandler: {
@@ -24,6 +25,7 @@ class WeatherAPI {
             
             if error != nil {
                 print("error [ApiHandler->getLocationForecast()]: \(String(describing: error))")
+                
                 return
             }
             
@@ -35,6 +37,7 @@ class WeatherAPI {
                 let jsonObject = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any]
                 let forecast = CityWeather(data: jsonObject!)
                 callback(_: forecast)
+                
             } catch _ {
                 return
             }
@@ -43,8 +46,8 @@ class WeatherAPI {
         dataTask.resume()
     }
     
-    func findCity(cityName: String, callback: @escaping (_: [CityModel]) -> Void) {
-        let url = URL(string: METAWEATHER_API_BASE + METAWEATHER_API_SEARCH + "\(cityName)")
+    func getCityForWeather(cityName: String, callback: @escaping (_: [CityModel]) -> Void) {
+        let url = URL(string: MAIN + SEARCH + "\(cityName)")
         if url == nil { return }
         let urlSession = URLSession.shared
         
@@ -62,9 +65,11 @@ class WeatherAPI {
             
             do {
                 let jsonObject = try JSONSerialization.jsonObject(with: data!, options: []) as? [[String: Any]]
+                
                 var cities: [CityModel] = []
                 
                 for subObject in jsonObject! {
+                    
                     cities.append(CityModel(jsonData: subObject))
                 }
                 

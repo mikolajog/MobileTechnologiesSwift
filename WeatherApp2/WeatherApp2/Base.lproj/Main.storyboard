@@ -265,17 +265,17 @@
                     </view>
                     <navigationItem key="navigationItem" title="City" id="atn-FF-wQ3"/>
                     <connections>
-                        <outlet property="airPressureTextField" destination="Bs7-9t-H0z" id="f5G-gw-ci9"/>
                         <outlet property="cityNavigationItem" destination="atn-FF-wQ3" id="2iM-Hb-8Nq"/>
-                        <outlet property="conditionsLabel" destination="Xe7-pH-xpX" id="qHu-vQ-XTl"/>
-                        <outlet property="currentDateLabel" destination="M3Z-54-a7C" id="8Kp-wJ-mlA"/>
-                        <outlet property="iconImageView" destination="cLY-a2-qcP" id="c5r-IS-jTC"/>
-                        <outlet property="nextBtn" destination="Di3-pV-X1W" id="nKb-GG-Akm"/>
-                        <outlet property="prevBtn" destination="0Cc-St-fFo" id="xkS-46-cRC"/>
-                        <outlet property="tempMaxTextField" destination="Zt4-hW-PgX" id="OXM-IJ-1kO"/>
-                        <outlet property="tempMinTextField" destination="b2o-vu-gXX" id="Ama-rC-eEW"/>
-                        <outlet property="windDirTextField" destination="uBp-wy-p0H" id="srW-we-ad4"/>
-                        <outlet property="windSpeedTextField" destination="yJZ-xY-o8G" id="tK7-Ih-NOH"/>
+                        <outlet property="conditions" destination="Xe7-pH-xpX" id="qHu-vQ-XTl"/>
+                        <outlet property="currDate" destination="M3Z-54-a7C" id="8Kp-wJ-mlA"/>
+                        <outlet property="direction" destination="uBp-wy-p0H" id="srW-we-ad4"/>
+                        <outlet property="img" destination="cLY-a2-qcP" id="c5r-IS-jTC"/>
+                        <outlet property="nextButton" destination="Di3-pV-X1W" id="nKb-GG-Akm"/>
+                        <outlet property="pressure" destination="Bs7-9t-H0z" id="f5G-gw-ci9"/>
+                        <outlet property="previousButton" destination="0Cc-St-fFo" id="xkS-46-cRC"/>
+                        <outlet property="speedWind" destination="yJZ-xY-o8G" id="tK7-Ih-NOH"/>
+                        <outlet property="tempMax" destination="Zt4-hW-PgX" id="OXM-IJ-1kO"/>
+                        <outlet property="tempMin" destination="b2o-vu-gXX" id="Ama-rC-eEW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -412,9 +412,9 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="cancelButton" destination="qO9-MO-5GU" id="0v1-j4-fEs"/>
-                        <outlet property="cityTextField" destination="ydI-u3-fJE" id="WN6-xA-A3Z"/>
-                        <outlet property="findButton" destination="c6E-ce-aY9" id="d3r-TA-PBh"/>
+                        <outlet property="buttonCancel" destination="qO9-MO-5GU" id="0v1-j4-fEs"/>
+                        <outlet property="buttonFind" destination="c6E-ce-aY9" id="d3r-TA-PBh"/>
+                        <outlet property="textcityyFinder" destination="ydI-u3-fJE" id="WN6-xA-A3Z"/>
                         <segue destination="fky-Lb-c91" kind="unwind" identifier="unwindSegueToMasterView" unwindAction="unwindToMVWithSegue:" id="Lk8-iL-mVe"/>
                     </connections>
                 </tableViewController>

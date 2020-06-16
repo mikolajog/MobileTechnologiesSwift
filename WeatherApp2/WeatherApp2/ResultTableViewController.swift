@@ -10,11 +10,12 @@ import UIKit
 
 class ResultTableViewController: UITableViewController {
     
-    @IBOutlet weak var findButton: UIButton!
-    @IBOutlet weak var cancelButton: UIButton!
-    @IBOutlet weak var cityTextField: UITextField!
+    @IBOutlet weak var buttonFind: UIButton!
+    @IBOutlet weak var buttonCancel: UIButton!
+    @IBOutlet weak var textcityyFinder: UITextField!
     
-    var cities = [CityModel]()
+    var locations = [CityModel]()
+    
     var selectedCity: CityModel?
     
     override func viewDidLoad() {
@@ -26,16 +27,18 @@ class ResultTableViewController: UITableViewController {
     }
     
     @IBAction func findCities(_ sender: UIButton) {
-        self.cities.removeAll()
-        let city = cityTextField.text!
-        WeatherAPI().findCity(cityName: city, callback: saveDataAndUpdateView)
+        self.locations.removeAll()
+        
+        let city = textcityyFinder.text!
+        
+        WeatherAPI().getCityForWeather(cityName: city, callback: saveDataAndUpdateView)
     }
     
     func saveDataAndUpdateView(cities: [CityModel]) {
         DispatchQueue.main.async {
             for i in 0..<cities.count {
-                print("city callback - \(cities[i].name)")
-                self.cities.append(cities[i])
+                print("city callback - \(cities[i].nameOfCity)")
+                self.locations.append(cities[i])
             }
             
             self.tableView.reloadData()
@@ -43,13 +46,13 @@ class ResultTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cities.count
+        return locations.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = cities[indexPath.row].name
-        cell.tag = Int(cities[indexPath.row].id)!
+        cell.textLabel?.text = locations[indexPath.row].nameOfCity
+        cell.tag = Int(locations[indexPath.row].idOfCity)!
         
         return cell
     }
@@ -57,7 +60,9 @@ class ResultTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let indexPath = tableView.indexPathForSelectedRow
+        
         let cell = tableView.cellForRow(at: indexPath!)!
+        
         self.selectedCity = CityModel(name: (cell.textLabel?.text!)!, id: String(cell.tag))
         performSegue(withIdentifier: "unwindSegueToMasterView", sender: self)
     }
@@ -65,9 +70,10 @@ class ResultTableViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destination = segue.destination as! MasterViewController
-        destination.cities.append(self.selectedCity!)
+        destination.locations.append(self.selectedCity!)
+        
         destination.tableView.reloadData()
-        destination.readWeather(cityId: self.selectedCity!.id, cityName: self.selectedCity!.name)
+        destination.getWeather(cityId: self.selectedCity!.idOfCity, cityName: self.selectedCity!.nameOfCity)
     }
     
 }

@@ -10,39 +10,42 @@ import Foundation
 
 class CityWeather {
     
-    var forecastList = [DayWeather]()
-    var dayNum = Int()
-    var cityName = String()
-    var cityId = String()
+    var myList = [DayWeather]()
+    var numberDayinOrder = Int()
+    var nameOfCity = String()
+    var idOfCity = String()
     
     init() {
     }
     
     init(data: [String: Any]) {
+        
         let daysRawData = data["consolidated_weather"]! as? [[String: Any]]
         
         for dayData in daysRawData! {
-            forecastList.append(DayWeather(data: dayData))
+            
+            myList.append(DayWeather(data: dayData))
         }
         
-        dayNum = 0
-        cityName = "\(data["title"]!)"
-        cityId = "\(data["woeid"]!)"
+        numberDayinOrder = 0
+        
+        nameOfCity = "\(data["title"]!)"
+        idOfCity = "\(data["woeid"]!)"
     }
     
-    func getDailyForecast() -> DayWeather {
-        return forecastList[dayNum]
+    func getDay() -> DayWeather {
+        return myList[numberDayinOrder]
     }
     
-    func nextForecast() {
-        if dayNum < forecastList.count - 1 {
-            dayNum += 1
+    func getNext() {
+        if numberDayinOrder < myList.count - 1 {
+            numberDayinOrder += 1
         }
     }
     
-    func previousForecast() {
-        if dayNum > 0 {
-            dayNum -= 1
+    func getPrev() {
+        if numberDayinOrder > 0 {
+            numberDayinOrder -= 1
         }
     }
 }

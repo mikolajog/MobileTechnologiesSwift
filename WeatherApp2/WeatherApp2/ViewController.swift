@@ -12,22 +12,23 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var cityNavigationItem: UINavigationItem!
     
-    @IBOutlet weak var currentDateLabel: UILabel!
-    @IBOutlet weak var iconImageView: UIImageView!
-    @IBOutlet weak var conditionsLabel: UILabel!
-    @IBOutlet weak var tempMinTextField: UITextField!
-    @IBOutlet weak var tempMaxTextField: UITextField!
-    @IBOutlet weak var windSpeedTextField: UITextField!
-    @IBOutlet weak var windDirTextField: UITextField!
-    @IBOutlet weak var airPressureTextField: UITextField!
-    @IBOutlet weak var prevBtn: UIButton!
-    @IBOutlet weak var nextBtn: UIButton!
+    @IBOutlet weak var currDate: UILabel!
+    @IBOutlet weak var img: UIImageView!
+    @IBOutlet weak var conditions: UILabel!
+    @IBOutlet weak var tempMin: UITextField!
+    @IBOutlet weak var tempMax: UITextField!
+    @IBOutlet weak var speedWind: UITextField!
+    @IBOutlet weak var direction: UITextField!
+    @IBOutlet weak var pressure: UITextField!
+    @IBOutlet weak var previousButton: UIButton!
+    @IBOutlet weak var nextButton: UIButton!
     
     
     
-    var currentCityForecast: CityWeather! {
+    var currCityWeather: CityWeather! {
         didSet {
-            update()
+            
+            do_updates()
         }
     }
     
@@ -35,41 +36,44 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    func update() {
-        if currentCityForecast.dayNum != 0 {
-            prevBtn.isEnabled = true
-        } else {
-            prevBtn.isEnabled = false
+    func do_updates() {
+        if currCityWeather.numberDayinOrder != 0 {
+            previousButton.isEnabled = true
+        }
+        else {
+            previousButton.isEnabled = false
         }
         
-        if currentCityForecast.dayNum != currentCityForecast.forecastList.count - 1 {
-            nextBtn.isEnabled = true
-        } else {
-            nextBtn.isEnabled = false
+        if currCityWeather.numberDayinOrder != currCityWeather.myList.count - 1 {
+            nextButton.isEnabled = true
+        }
+        else {
+            nextButton.isEnabled = false
         }
         
-        cityNavigationItem.title = currentCityForecast.cityName
-        let dailyForecast = currentCityForecast.getDailyForecast()
-        currentDateLabel.text = dailyForecast.date
-        conditionsLabel.text =  dailyForecast.conditions
-        tempMinTextField.text = dailyForecast.tempMin
-        tempMaxTextField.text = dailyForecast.tempMax
-        windSpeedTextField.text = dailyForecast.windSpeed
-        windDirTextField.text = dailyForecast.windDir
-        airPressureTextField.text = dailyForecast.airPressure
-        iconImageView.image = UIImage(named: dailyForecast.abbrev)
+        cityNavigationItem.title = currCityWeather.nameOfCity
+        let day = currCityWeather.getDay()
+        
+        currDate.text = day.date
+        conditions.text =  day.conditions
+        tempMin.text = day.tempMin
+        tempMax.text = day.tempMax
+        speedWind.text = day.speedWind
+        direction.text = day.directionWind
+        pressure.text = day.pressure
+        img.image = UIImage(named: day.img)
         
         self.setNeedsFocusUpdate()
     }
     
     @IBAction func onprevBtnTouchUp(_ sender: UIButton) {
-        currentCityForecast.previousForecast()
-        update()
+        currCityWeather.getPrev()
+        do_updates()
     }
     
     @IBAction func onnextBtnTouchUp(_ sender: UIButton) {
-        currentCityForecast.nextForecast()
-        update()
+        currCityWeather.getNext()
+        do_updates()
     }
     
 }
@@ -77,6 +81,6 @@ class ViewController: UIViewController {
 
 extension ViewController: CitySelectionDelegate {
     func selectedCityForecast(_ forecast: CityWeather) {
-        currentCityForecast = forecast
+        currCityWeather = forecast
     }
 }

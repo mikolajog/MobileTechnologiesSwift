@@ -11,16 +11,19 @@ import Foundation
 
 class CityModel {
     
-    let name: String
-    let id: String
+    let nameOfCity: String
+    let idOfCity: String
     
     init(name: String, id: String) {
-        self.name = name
-        self.id = id
+        
+        self.nameOfCity = name
+        self.idOfCity = id
     }
     
     init(jsonData: [String: Any]) {
-        self.name = "\(jsonData["title"]!)"
-        self.id = "\(jsonData["woeid"]!)"
+        
+        self.nameOfCity = "\(jsonData["title"]!)"
+        
+        self.idOfCity = "\(jsonData["woeid"]!)"
     }
 }

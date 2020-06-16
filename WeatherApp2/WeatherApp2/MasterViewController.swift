@@ -14,37 +14,38 @@ protocol CitySelectionDelegate: class {
 
 class MasterViewController: UITableViewController {
     
-    var cities = [
+    var locations = [
         CityModel(name: "Osaka", id: "15015370"),
         CityModel(name: "Houston", id: "2424766"),
         CityModel(name: "Moscow", id: "2122265")
     ]
     
-    var cityIds = [Int: String]()
-    var forecasts = [String: CityWeather]()
+    var idsOfCity = [Int: String]()
+    
+    var weather = [String: CityWeather]()
     
     weak var delegate: CitySelectionDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        readWeatherForAllCities()
+        getAllCitiesWeather()
     }
     
-    func readWeatherForAllCities() {
-        for city in cities {
-            readWeather(cityId: city.id, cityName: city.name)
+    func getAllCitiesWeather() {
+        for city in locations {
+            getWeather(cityId: city.idOfCity, cityName: city.nameOfCity)
         }
     }
     
     
-    func readWeather(cityId: String, cityName: String) {
-        WeatherAPI().getLocationForecast(locationId: cityId, callback: saveDataAndUpdateView)
+    func getWeather(cityId: String, cityName: String) {
+        WeatherAPI().getWeatherForLocation(locationId: cityId, callback: datasaveandViewUpdate)
     }
     
-    func saveDataAndUpdateView(forecast: CityWeather) {
+    func datasaveandViewUpdate(forecast: CityWeather) {
         DispatchQueue.main.async {
-            self.forecasts[forecast.cityId] = forecast
+            self.weather[forecast.idOfCity] = forecast
             self.updateView(locationForecast: forecast)
         }
     }
@@ -54,13 +55,13 @@ class MasterViewController: UITableViewController {
         
         if let cells = tableCell {
             for cell in cells {
-                let cityId = cityIds[cell.tag]
-                if cityId == locationForecast.cityId {
-                    let forecast = locationForecast.getDailyForecast()
-                    cell.imageView?.image = UIImage(named: forecast.abbrev)
+                let cityId = idsOfCity[cell.tag]
+                if cityId == locationForecast.idOfCity {
+                    let forecast = locationForecast.getDay()
+                    cell.imageView?.image = UIImage(named: forecast.img)
                     cell.detailTextLabel?.text = "\(forecast.tempMain)°C"
                     
-                    if cityId == cities[0].id {
+                    if cityId == locations[0].idOfCity {
                         delegate?.selectedCityForecast(locationForecast)
                     }
                     
@@ -73,22 +74,22 @@ class MasterViewController: UITableViewController {
     @IBAction func unwindToMV(segue:UIStoryboardSegue) { }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cities.count
+        return locations.count
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = cities[indexPath.row].name
+        cell.textLabel?.text = locations[indexPath.row].nameOfCity
         cell.tag = indexPath.row
-        cityIds[cell.tag] = cities[indexPath.row].id
+        idsOfCity[cell.tag] = locations[indexPath.row].idOfCity
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedCity = cities[indexPath.row]
-        delegate?.selectedCityForecast(forecasts[selectedCity.id]!)
+        let selectedCity = locations[indexPath.row]
+        delegate?.selectedCityForecast(weather[selectedCity.idOfCity]!)
         
         if let detailViewController = delegate as? ViewController {
             splitViewController?.showDetailViewController(detailViewController, sender: nil)
