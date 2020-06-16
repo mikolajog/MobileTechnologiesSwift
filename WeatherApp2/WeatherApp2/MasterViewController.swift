@@ -15,9 +15,9 @@ protocol CitySelectionDelegate: class {
 class MasterViewController: UITableViewController {
     
     var cities = [
-        CityModel(name: "New York", id: "2459115"),
-        CityModel(name: "Chicago", id: "2379574"),
-        CityModel(name: "Miami", id: "2450022")
+        CityModel(name: "Osaka", id: "15015370"),
+        CityModel(name: "Houston", id: "2424766"),
+        CityModel(name: "Moscow", id: "2122265")
     ]
     
     var cityIds = [Int: String]()
